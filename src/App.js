@@ -1,4 +1,11 @@
-import React from 'react';
+//import React from 'react';
+
+import Hello from './Hello';
+
+import Place from './Place';
+import ClassPlace from './ClassPlace';
+
+import Bar from './Bar';
 
 const list = [
   {
@@ -31,6 +38,8 @@ const welcome = {
   title: 'FE20'
 };
 
+
+
 const myArray = ["I'm", "an", "array"];
 const myNumbers = [1, 4, 8];
 
@@ -55,8 +64,10 @@ function writePTagsWithoutMap(arr) {
   return newArr
 }
 
-function App() {
 
+const element = <Place location="Kilimanjaro" elevation="1500" />;
+
+function App() {
   return (
     <div>
       <h1>My Hacker Stories</h1>
@@ -64,8 +75,11 @@ function App() {
       <label htmlFor="search">Search: </label>
       <input id="search" type="text" />
 
-      <hr />
-
+      <Bar />
+      <Hello />
+      {/* <Place /> */}
+      {element}
+      <ClassPlace location="Kilimanjaro" elevation="1500" />;
       {list.map(function(item) {
         return (
           <div key={item.objectID}>
@@ -80,5 +94,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
