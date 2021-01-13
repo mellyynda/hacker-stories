@@ -8,6 +8,8 @@ import ACTOR_DATA from './data.js';
 
 import Bar from './Bar';
 
+const imageURL = "https://image.tmdb.org/t/p/original";
+
 const list = [
   {
     title: 'React',
@@ -65,13 +67,29 @@ du har data i en variabel innehållandes skådisar.
 3. det ska resultera i en lista med skådisarna, namn och bild
 */
 
+/*list.map(function (item) {
+        return (
+          <ActorItem ...? />);
+      })*/
+
 function ActorList(props) {
-  console.log(props.data)
-  return (<ActorItem item={props.data} />)
+  //console.log(props.data)
+  // skriv om ActorList's render så att den renderar en ActorItem
+  // för varje skådis i props.data med hjälp av .map
+  return (<><ActorItem item={props.data[0]} />
+    <ActorItem item={props.data[1]} />
+    <ActorItem item={props.data[2]} />
+    <ActorItem item={props.data[3]} />
+    <ActorItem item={props.data[4]} /></>)
 }
 
 function ActorItem(props) {
-  return (<div>HEJ från Item</div>)
+  console.log(props.item)
+  return (<div key={props.item.id}>
+    <img src={imageURL + props.item.profile_path} width="30%" alt="Actor" />
+    <br />
+    <span>{props.item.name} playing <br />{props.item.character}</span>
+  </div>)
 
 }
 
