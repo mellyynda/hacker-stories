@@ -4,7 +4,7 @@ import Hello from './Hello';
 
 import Place from './Place';
 import ClassPlace from './ClassPlace';
-
+import ACTOR_DATA from './data.js'
 import Bar from './Bar';
 
 const list = [
@@ -68,6 +68,7 @@ function writePTagsWithoutMap(arr) {
 const element = <Place location="Kilimanjaro" elevation="1500" />;
 
 function App() {
+  console.log(ACTOR_DATA);
   return (
     <div>
       <h1>My Hacker Stories</h1>
