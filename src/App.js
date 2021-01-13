@@ -4,6 +4,7 @@ import Hello from './Hello';
 
 import Place from './Place';
 import ClassPlace from './ClassPlace';
+import ACTOR_DATA from './data.js';
 
 import Bar from './Bar';
 
@@ -15,21 +16,14 @@ const list = [
     num_comments: 3,
     points: 4,
     objectID: 0,
-}, {
+  }, {
     title: 'Redux',
     url: 'https://redux.js.org/',
     author: 'Dan Abramov, Andrew Clark',
     num_comments: 2,
     points: 5,
     objectID: 1,
-}, {
-  title: 'Hackers',
-  url: 'https://hackers.org/',
-  author: 'Krillzorz',
-  num_comments: 2,
-  points: 5,
-  objectID: 2,
-}, 
+  }
 ];
 
 
@@ -64,23 +58,40 @@ function writePTagsWithoutMap(arr) {
   return newArr
 }
 
+/*
+du har data i en variabel innehållandes skådisar.
+1. skapa en ny komponent som får vara en listkomponent
+2. skapa en ny komponent som får vara itemcomponent
+3. det ska resultera i en lista med skådisarna, namn och bild
+*/
+
+function ActorList(props) {
+  console.log(props.data)
+  return (<ActorItem item={props.data} />)
+}
+
+function ActorItem(props) {
+  return (<div>HEJ från Item</div>)
+
+}
 
 const element = <Place location="Kilimanjaro" elevation="1500" />;
 
 function App() {
+  //console.log(ACTOR_DATA)
   return (
     <div>
       <h1>My Hacker Stories</h1>
-      
+
       <label htmlFor="search">Search: </label>
       <input id="search" type="text" />
 
       <Bar />
       <Hello />
-      {/* <Place /> */}
-      {element}
-      <ClassPlace location="Kilimanjaro" elevation="1500" />;
-      {list.map(function(item) {
+      <ActorList data={ACTOR_DATA.cast} />
+
+      {/* <ClassPlace location="Kilimanjaro" elevation="1500" />; */}
+      {/*list.map(function (item) {
         return (
           <div key={item.objectID}>
             <span>
@@ -89,8 +100,8 @@ function App() {
             <span>{item.author}</span>
             <span>{item.num_comments}</span>
             <span>{item.points}</span>
-</div> );
-})}
+          </div>);
+      })*/}
     </div>
   );
 }

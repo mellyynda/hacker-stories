@@ -1,6 +1,7 @@
 // https://image.tmdb.org/t/p/original/xu1l9WmNY1XYZyJ3M2gvGqCCDGS.jpg
 
-const data = {
+
+const ACTOR_DATA = {
     "cast": [
         {
             "adult": false,
@@ -87,3 +88,5 @@ const data = {
             "order": 5
         }]
 }
+
+export default ACTOR_DATA;
