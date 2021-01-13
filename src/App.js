@@ -1,12 +1,12 @@
 //import React from 'react';
-
 import Hello from './Hello';
 
 import Place from './Place';
 import ClassPlace from './ClassPlace';
 import ACTOR_DATA from './data.js';
-
 import Bar from './Bar';
+
+import './App.css';
 
 const imageURL = "https://image.tmdb.org/t/p/original";
 
@@ -65,6 +65,9 @@ du har data i en variabel innehållandes skådisar.
 1. skapa en ny komponent som får vara en listkomponent
 2. skapa en ny komponent som får vara itemcomponent
 3. det ska resultera i en lista med skådisarna, namn och bild
+-- klar!
+4. skapa en basic layout för "korten", ett kort per skådis
+
 */
 
 /*list.map(function (item) {
@@ -76,20 +79,17 @@ function ActorList(props) {
   //console.log(props.data)
   // skriv om ActorList's render så att den renderar en ActorItem
   // för varje skådis i props.data med hjälp av .map
-  return (<><ActorItem item={props.data[0]} />
-    <ActorItem item={props.data[1]} />
-    <ActorItem item={props.data[2]} />
-    <ActorItem item={props.data[3]} />
-    <ActorItem item={props.data[4]} /></>)
+  return (<ul>{props.data.map(function (item) {
+    return (<ActorItem key={item.id} item={item} />);
+  })}</ul>);
 }
 
 function ActorItem(props) {
-  console.log(props.item)
-  return (<div key={props.item.id}>
-    <img src={imageURL + props.item.profile_path} width="30%" alt="Actor" />
-    <br />
-    <span>{props.item.name} playing <br />{props.item.character}</span>
-  </div>)
+  //console.log(props.item)
+  return (<li>
+    <img src={imageURL + props.item.profile_path} width="100%" alt="Actor" />
+    <span>{props.item.name}</span><span>playing</span><span>{props.item.character}</span>
+  </li>)
 
 }
 
