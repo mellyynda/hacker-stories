@@ -1,5 +1,14 @@
 // https://image.tmdb.org/t/p/original/xu1l9WmNY1XYZyJ3M2gvGqCCDGS.jpg
 
+export const API_URL = 'https://api.themoviedb.org/3/movie';
+export const LISTS = ['/now_playing', '/top_rated', '/upcoming', '/popular'];
+export const API_KEY = '?api_key=6121f2781ce32b42d2c36965f683de80';
+export const SETTINGS = '&language=en-US&page=1';
+export const IMAGE_URL = 'https://image.tmdb.org/t/p/original';
+
+// API_URL + NOW_PLAYING + API_KEY + SETTINGS
+
+
 const ACTOR_DATA = {
     "cast": [
         {

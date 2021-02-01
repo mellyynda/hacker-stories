@@ -1,5 +1,5 @@
-function Hello () {
-    return (<h1>Yo!</h1>);
+function Hello (props) {
+    return (<props.title>Yo!</props.title>);
 }
 
 export default Hello;

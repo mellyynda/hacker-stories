@@ -1,112 +1,106 @@
-//import React from 'react';
 import Hello from './Hello';
-
-import Place from './Place';
-import ClassPlace from './ClassPlace';
-import ACTOR_DATA from './data.js';
+import ACTOR_DATA, { API_URL, LISTS, API_KEY, SETTINGS } from './data.js';
 import Bar from './Bar';
+import ActorList from './ActorList.js'
+import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+import React from 'react';
+import MovieList from './MovieList';
+import { useState, useEffect } from 'react';
+import MiddleOne from './MiddleOne';
+import MovieContext from './MovieContext';
 
-import './App.css';
+//import './App.css';
 
-const imageURL = "https://image.tmdb.org/t/p/original";
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  }, {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
+const GlobalStyle = createGlobalStyle`
+* {
+    margin: 0;
+    padding: 0;
   }
-];
+`;
 
+const Container = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+`; 
 
-const welcome = {
-  greeting: 'Yo',
-  title: 'FE20'
-};
+// const H1 = styled.h1`
+// text-align: center;
+// padding: 15px;
+// `;
 
+const StyledLabel = styled.label`
+border: none;
+text-align: center;
+`;
 
+const StyledInput = styled.input`
+border: none;
+text-align: center;
+outline: none;
 
-const myArray = ["I'm", "an", "array"];
-const myNumbers = [1, 4, 8];
-
-function getTitle(title) {
-  return 'From Function' + title;
+&:hover,
+&:active,
+&:focus {
+  box-shadow: 0px 10px 13px -7px #000000;
 }
+`;
 
-// const map1 = array1.map(x => x * 2);
-
-function writePTags(arr) {
-  return arr.map(function (x, index) {
-    console.log(x)
-    return (<p key={index}>{x}</p>);
-  })
-}
-
-function writePTagsWithoutMap(arr) {
-  let newArr = []
-  for (let i = 0; i < arr.length; i++) {
-    newArr.push(<p key={i}>{arr[i]}</p>)
-  }
-  return newArr
-}
-
-/*
-du har data i en variabel innehållandes skådisar.
-1. skapa en ny komponent som får vara en listkomponent
-2. skapa en ny komponent som får vara itemcomponent
-3. det ska resultera i en lista med skådisarna, namn och bild
--- klar!
-4. skapa en basic layout för "korten", ett kort per skådis
-
-*/
-
-/*list.map(function (item) {
-        return (
-          <ActorItem ...? />);
-      })*/
-
-function ActorList(props) {
-  //console.log(props.data)
-  // skriv om ActorList's render så att den renderar en ActorItem
-  // för varje skådis i props.data med hjälp av .map
-  return (<ul>{props.data.map(function (item) {
-    return (<ActorItem key={item.id} item={item} />);
-  })}</ul>);
-}
-
-function ActorItem(props) {
-  //console.log(props.item)
-  return (<li>
-    <img src={imageURL + props.item.profile_path} width="100%" alt="Actor" />
-    <span>{props.item.name}</span><span>playing</span><span>{props.item.character}</span>
-  </li>)
-
-}
-
-const element = <Place location="Kilimanjaro" elevation="1500" />;
+const Title = styled.h1`
+text-align: center;
+  padding: 15px;
+`;
 
 function App() {
-  //console.log(ACTOR_DATA)
-  return (
-    <div>
-      <h1>My Hacker Stories</h1>
 
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
+const [movies, setMovies] = useState([]);
+const [display, setDisplay] = useState(LISTS[0]);
+const [listTitle, setListTitle] = useState(LISTS[0].replace('/', '').replace('_', ' ').toUpperCase());
+
+useEffect(() => {
+  fetch(API_URL + display + API_KEY + SETTINGS)
+    .then(response => response.json())
+    .then(data => setMovies(data.results))
+}, [display])
+
+const search = (e) => {
+  const query = e.target.value;
+  const list = [];
+  movies.map(movie => {
+    if(movie.title.toLowerCase().includes(query.toLowerCase())){
+      console.log(movie);
+      list.push(movie);
+    }
+  })
+  setMovies(list);
+  console.log('function stop');
+}
+
+const contextDataObject = { data: movies, title: listTitle, LISTS, setDisplay, setListTitle };
+console.log(contextDataObject);
+
+  return (<>
+  <MovieContext.Provider value={contextDataObject}>
+    <React.Fragment><div>
+    <Container>
+      <Title>My Hacker Stories</Title>
+
+      
+
+      <StyledLabel htmlFor="search">Search: </StyledLabel>
+      <StyledInput id="search" type="text" onChange={search}/>
+      <MiddleOne data={movies} title={listTitle} />
+      {/* <button onClick={() => setDisplay(TOP_RATED)}>Top rated</button>
+      <button onClick={() => setDisplay(UPCOMING)}>Upcoming</button>
+      <button onClick={() => setDisplay(POPULAR)}>Popular</button> */}
 
       <Bar />
-      <Hello />
-      <ActorList data={ACTOR_DATA.cast} />
+      <MovieList  />
+      {/* <MovieList data={movies} title={listTitle}/> */}
+      {/* <Hello title={Title} /> */}
+      {/* <ActorList data={ACTOR_DATA.cast} /> */}
 
       {/* <ClassPlace location="Kilimanjaro" elevation="1500" />; */}
       {/*list.map(function (item) {
@@ -120,7 +114,11 @@ function App() {
             <span>{item.points}</span>
           </div>);
       })*/}
-    </div>
+    </Container></div>
+    <GlobalStyle />
+    </React.Fragment>
+    </MovieContext.Provider>
+    </>
   );
 }
 
